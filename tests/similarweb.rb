@@ -47,7 +47,7 @@ raise('Similarweb API key not set') if ENV['SIMILARWEB_API_KEY'].nil?
 
 status = 0
 # Fetch changes
-diff = `git diff entries/ | sed -n 's/^+.*"domain"[^"]*"\\(.*\\)".*/\\1/p'`
+diff = `git diff origin/master...HEAD entries/ | sed -n 's/^+.*"domain"[^"]*"\\(.*\\)".*/\\1/p'`
 # Strip and loop through diff
 diff.split("\n").each do |site|
   domain = Addressable::URI.parse("https://#{site}").domain
@@ -57,4 +57,4 @@ rescue StandardError => e
   puts "\e[31m#{e.message}\e[39m"
   status = 1
 end
-exit(status) if Time.now.to_i > 1_651_363_200
+exit(status)
